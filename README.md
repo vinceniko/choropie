@@ -1,3 +1,4 @@
+![ChoroPie](images/choropie_logo.png "ChoroPie")
 ChoroPie
 ===============================
 
