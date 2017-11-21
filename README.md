@@ -24,7 +24,7 @@ A Basemap/Matplotlib toolkit which allows the simplified creation of choropleth 
 
 Example:
 --------
-Without size data:
+Without size data:  
 <img src="https://user-images.githubusercontent.com/30331170/33050049-ebfc0cd2-ce30-11e7-92df-84269f423ea8.png" width="60%"/>
 
 Installation
@@ -104,7 +104,7 @@ alaska | white | 0.000105
 
 ##### Note-   
 pie plotting is optional. If pies are plotted, both size_data and size_ratios are optional.  
-The pie_dict parameter selects the colors for each pie slice. 
+The pie_dict parameter selects the colors for each pie slice.  
 scale_factor_size and scale_fractor_ratios modify the difference in size between each pie chart and pie slice.  
 other arguments should be known to matplotlib and basemap users.  
 
@@ -115,7 +115,7 @@ size_ratios scales the size of a slice (or the length of its radius) relative to
 ### Results:
 <img src="https://user-images.githubusercontent.com/30331170/33050018-b200156e-ce30-11e7-9ffa-b58885df2062.png" width="75%"/>
 By examining these results we can see that:  
-1. California has had the most police killings.  
-2. California has not had the highest per capita rate of police killings, with states such as New Mexico edging out ahead. 
-3. In most states, the race with the most deaths were whites.  
-4. Despite that more whites were killed in several states including: Oklahoma and Missiori, those states had more blacks killed when adjusted for population differences for each race.  
+1. California has had the most police killings.
+2. California has not had the highest per capita rate of police killings, with states such as New Mexico edging out ahead.
+3. In most states, the race with the most deaths were whites.
+4. Despite that more whites were killed in several states including: Oklahoma and Missiori, those states had more blacks killed when adjusted for population differences for each race.
