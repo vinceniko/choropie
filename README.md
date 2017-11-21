@@ -15,7 +15,7 @@ A Basemap/Matplotlib toolkit which allows the simplified creation of choropleth 
   *Easy choropleth mapping.  
   *Easy colorbar insertion.  
   *Plot pie charts at each shp file polygon centroid.  
-  *Visualize extra features using the size of the pie charts, or even size of each pie slice (ie. the length of its radius).
+  *Visualize extra features using the size of the pie charts, or even size of each pie slice (ie. the length of its radius).  
   *Limit main axes limits to specific areas (zoom to areas).  
   *Translate polygons and pie charts with the geographic coordinate system.  
   *Use offsets on polygons to make slight translations.  
