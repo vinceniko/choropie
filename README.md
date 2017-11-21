@@ -24,8 +24,14 @@ A Basemap/Matplotlib toolkit which allows the simplified creation of choropleth 
 
 Example:
 --------
-Without size data:  
-<img src="https://user-images.githubusercontent.com/30331170/33050049-ebfc0cd2-ce30-11e7-92df-84269f423ea8.png" width="60%"/>
+Without size_data:  
+<img src="https://user-images.githubusercontent.com/30331170/33050049-ebfc0cd2-ce30-11e7-92df-84269f423ea8.png" width="60%" />
+
+With size_data:  
+<img src="https://user-images.githubusercontent.com/30331170/33052907-04c44316-ce3f-11e7-9bb0-d3c426502de4.png" width="60%" />
+
+With size_data and size_ratios:  
+<img src="https://user-images.githubusercontent.com/30331170/33050018-b200156e-ce30-11e7-9ffa-b58885df2062.png" width="60%"/>
 
 Installation
 --------------------
