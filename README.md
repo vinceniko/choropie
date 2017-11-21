@@ -1,4 +1,4 @@
-![ChoroPie](images/choropie_logo.png "ChoroPie")
+<img src="https://user-images.githubusercontent.com/30331170/33049757-81c16598-ce2f-11e7-8058-8852a09c7373.png" width="30%"/>
 
 ChoroPie
 ===============================
@@ -10,6 +10,10 @@ Overview
 --------
 
 A Basemap/Matplotlib toolkit which allows the simplified creation of choropleth maps with colorbars using shapefiles, and the combined plotting of pie charts within the centroid coordinates of the shapefile's polygons.
+
+Example:
+------
+<img src="https://user-images.githubusercontent.com/30331170/33050049-ebfc0cd2-ce30-11e7-92df-84269f423ea8.png" width="70%"/>
 
 Installation / Usage
 --------------------
