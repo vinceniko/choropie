@@ -112,9 +112,9 @@ alaska | white | 0.000105
 *Pie plotting is optional. If pies are plotted, both size_data and size_ratios are optional. Not all pies have to be plotted as well (if it gets too cluttered...though in that case you can call the zoom_to_area method).  
 *Choropleth plotting is optional.  
 *The pie_dict parameter selects the colors for each pie slice.  
-scale_factor_size and scale_fractor_ratios modify the difference in size between each pie chart and pie slice. 
+*Scale_factor_size and scale_fractor_ratios modify the difference in size between each pie chart and pie slice.  
 *After calling zoom_to_area (which sets the limits of the main axis to the max and min of the passed in areas), call zoom_home to restore axis to original limits.  
-*Other arguments should be known to matplotlib and basemap users.  
+*Other arguments should be known to Matplotlib and Basemap users.  
 
 ### Explanation:
 size_data is a feature which can scale each pie chart's overall diameter relative to other pie charts.  
