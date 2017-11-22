@@ -12,9 +12,9 @@ import matplotlib.path as mplPath
 from choropie import poly_functs as sc
 
 
-def get_shp_keys(shp_file):
+def get_shp_attributes(shp_file):
     """
-    Convenience for retrieving shp keys.
+    Convenience function for retrieving shp attributes.
 
     Parameters:
         shp_file (string): path to shp file without extension.
@@ -25,6 +25,19 @@ def get_shp_keys(shp_file):
 
     return m.area_info
 
+def find_shp_key(index, shp_lst):
+    """
+    Iterate through shp file attributes to find the key which matches the input index which will be used in Choropie.
+
+    Parameters:
+        index (list of strings): area_names as indices. same index to be passed into choropie parameters like size_data.
+        shp_lst (list of dicts): same object as returned by get_shp_attributes or Basemap."area"_info.
+    """
+    for item in index:
+        for dct in shp_lst:
+            for key, val in dct.items():
+                if item == val:
+                    return key
 
 def coords_in_area(locations, coords, shp_file, shp_key):
     """

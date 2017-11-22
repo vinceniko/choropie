@@ -66,15 +66,19 @@ dict_states = {
 }
 
 # import general state population dataset and remove first three rows
-df_pop = pd.read_excel('Data/state_population_estimates.xlsx'), skiprows=3)
+df_pop = pd.read_excel('Data/state_population_estimates.xlsx', skiprows=3)
 
 # to remove '.' in front of state in df_pop
+
+
 def remove_period(x):
     if isinstance(x, str) and x[0] == '.':
         x = x.replace('.', '')
         return x
 
-df_pop.iloc[:, 0] = df_pop.iloc[:, 0].apply(remove_period) # perform remove_period
+
+df_pop.iloc[:, 0] = df_pop.iloc[:, 0].apply(
+    remove_period)  # perform remove_period
 
 # select necessary state rows and correct year
 series_pop = df_pop.set_index(df_pop.columns[0]).loc['Alabama':'Wyoming', 2016]
@@ -82,9 +86,11 @@ series_pop.name = 'population'
 
 # import police killings dataset
 # set proper encoding or get error.
-df_killings = pd.read_csv('Data/PoliceKillingsUS.csv'), encoding="latin1")
+df_killings = pd.read_csv('Data/PoliceKillingsUS.csv', encoding="latin1")
 
 # replace race abbreviations
+
+
 def spam(x):
     try:
         if x[0] == 'A':
@@ -101,6 +107,7 @@ def spam(x):
             return "White"
     except Exception:
         return None
+
 
 df_killings['race'] = df_killings['race'].apply(spam)
 
@@ -119,7 +126,9 @@ series_state.rename('counts', inplace=True)
 series_race = df_killings.groupby(['state', 'race']).count()['id']
 
 # percentage of each race killed by state
-series_state_crime_race_percs = series_race / series_race.groupby('state').sum() * 100
+series_state_crime_race_percs = series_race / \
+    series_race.groupby('state').sum() * 100
+
 
 def set_index_states(df):
     if isinstance(df.index, pd.MultiIndex):
@@ -128,6 +137,7 @@ def set_index_states(df):
     elif isinstance(df.index, pd.Index):
         list_abb = [dict_states[abb] for abb in df.index]
         df.index = list_abb
+
 
 # fix indexes (replace state abbreviations with state name)
 # series_race and series_state
@@ -153,16 +163,15 @@ df_massaged = df_massaged.groupby(
 df_race = pd.concat([series_race, series_state_crime_race_percs,
                      df_massaged], axis=1).dropna()
 df_race.columns = ['count', 'percs', 'pop']
-df_race['per capita'] = df_race['count'] / df_race['pop']
+df_race['per_capita'] = df_race['count'] / df_race['pop']
 
 ###################
 
 # df_state.drop('California', inplace=True)
 
 basemap = dict(
-    basemap_kwargs=dict(
-        llcrnrlon=-119, llcrnrlat=22, urcrnrlon=-64, urcrnrlat=49, projection='lcc', lat_1=33, lat_2=45, lon_0=-95
-    ),
+    basemap_kwargs=dict(llcrnrlon=-119, llcrnrlat=22, urcrnrlon=-64,
+                        urcrnrlat=49, projection='lcc', lat_1=33, lat_2=45, lon_0=-95),
     shp_file='Data/cb_2016_us_state_500k/cb_2016_us_state_500k',
     shp_key='NAME',
     figsize=(22, 12),
@@ -173,15 +182,15 @@ choro = dict(
     cmap='hot_r',
     color_data=df_state['counts'],
 )
-
+df_state['per_capita']
 pie = dict(
     size_data=df_state['per_capita'],
-    size_ratios=df_race['per capita'],
+    size_ratios=df_race['per_capita'],
     pie_data=df_race['percs'],
     pie_dict={'Asian': 'yellow', 'Black': 'black', 'Hispanic': 'brown',
               'Native American': 'red', 'Ocean Pacific': 'purple', 'White': 'white'},
     scale_factor_size=1,
-    scale_factor_ratios=1/2
+    scale_factor_ratios=1 / 2
 )
 
 test = cp.ChoroPie(**basemap)
@@ -191,14 +200,18 @@ test.clear_elements()
 test.choro_plot(**choro)
 test.pie_plot(**pie)
 
-test.insert_colorbar(colorbar_title='Map: Count of Killings', colorbar_loc_kwargs=dict(location='right'))
-test.insert_pie_legend(legend_loc='lower right', pie_legend_kwargs=dict(title='Pies: Racial Breakdown'))
+test.insert_colorbar(colorbar_title='Map: Count of Killings',
+                     colorbar_loc_kwargs=dict(location='right'))
+test.insert_pie_legend(legend_loc='lower right',
+                       pie_legend_kwargs=dict(title='Pies: Racial Breakdown'))
 
-test.ax.set_title('Police Killings: Jan. 02, 15 - Jul. 31, 17\nTotal: {:,d}'.format(df_killings.iloc[:,0].count()), fontsize=35, fontweight='bold', x=0.61, y=0.90)
+test.ax.set_title('Police Killings: Jan. 02, 15 - Jul. 31, 17\nTotal: {:,d}'.format(
+    df_killings.iloc[:, 0].count()), fontsize=35, fontweight='bold', x=0.61, y=0.90)
 
 test.fig.savefig('Outputs/qwerty.png', bbox_inches='tight')
 
-test.ax_colorbar.set_yticklabels(['{:.0f}'.format(float(i.get_text())) for i in test.ax_colorbar.get_ymajorticklabels()])
+test.ax_colorbar.set_yticklabels(['{:.0f}'.format(
+    float(i.get_text())) for i in test.ax_colorbar.get_ymajorticklabels()])
 
 # for i, j in test.corr_centroids.items():
 #     if i in series_state:
