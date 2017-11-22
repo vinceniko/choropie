@@ -66,7 +66,6 @@ shp_file = 'Data/cb_2016_us_state_500k/cb_2016_us_state_500k'  # file path to sh
 shp_lst = cp.get_shp_attributes(shp_file)  # extracts shp attrbiutes (same as basemap."area"_info)
 shp_key = cp.find_shp_key(df_state['counts'].index, shp_lst)  # determines which shp attribute matches the index of area_names that will be used for the plotting
 
-
 basemap = dict(
     basemap_kwargs=dict(
         llcrnrlon=-119, llcrnrlat=22, urcrnrlon=-64, urcrnrlat=49, projection='lcc', lat_1=33, lat_2=45, lon_0=-95
