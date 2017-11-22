@@ -11,16 +11,22 @@ Overview
 
 A Basemap/Matplotlib toolkit which allows the simplified creation of choropleth maps with colorbars using shapefiles, and the combined plotting of pie charts within the centroid coordinates of the shapefile's polygons.
 
+Requires
+-------
+* Basemap
+* Matplotlib
+* Pandas
+
 #### Features:
-  *Easy choropleth mapping.  
-  *Easy colorbar insertion.  
-  *Plot pie charts at each shp file polygon centroid.  
-  *Visualize extra features using the size of the pie charts, or even size of each pie slice (ie. the length of its radius).  
-  *Limit main axes limits to specific areas (zoom to areas).  
-  *Translate polygons and pie charts with the geographic coordinate system.  
-  *Use offsets on polygons to make slight translations.  
-  *Basemap class inheritance.  
-  *Access matplotlib objects.  
+  * Easy choropleth mapping.  
+  * Easy colorbar insertion.  
+  * Plot pie charts at each shp file polygon centroid.  
+  * Visualize extra features using the size of the pie charts, or even size of each pie slice (ie. the length of its radius).  
+  * Limit main axes limits to specific areas (zoom to areas).  
+  * Translate polygons and pie charts with the geographic coordinate system.  
+  * Use offsets on polygons to make slight translations.  
+  * Basemap class inheritance.  
+  * Access matplotlib objects.  
 
 Example:
 --------
@@ -54,6 +60,13 @@ This example uses data taken from <https://www.kaggle.com/the-guardian/the-count
 ### Code:
 ```
 from choropie import ChoroPie as cp
+
+# convenience functions for determining which shp attrtibute to use to match with area_name index
+shp_file = 'Data/cb_2016_us_state_500k/cb_2016_us_state_500k'  # file path to shp_file sans extension
+shp_lst = cp.get_shp_attributes(shp_file)  # extracts shp attrbiutes (same as basemap."area"_info)
+shp_key = cp.find_shp_key(df_state['counts'].index, shp_lst)  # determines which shp attribute matches the index of area_names that will be used for the plotting
+
+
 basemap = dict(
     basemap_kwargs=dict(
         llcrnrlon=-119, llcrnrlat=22, urcrnrlon=-64, urcrnrlat=49, projection='lcc', lat_1=33, lat_2=45, lon_0=-95
@@ -109,22 +122,31 @@ alaska | native american | 0.001135
 alaska | white | 0.000105
 
 ##### Notes-   
-*Pie plotting is optional. If pies are plotted, both size_data and size_ratios are optional. Not all pies have to be plotted as well (if it gets too cluttered...though in that case you can call the zoom_to_area method).  
-*Choropleth plotting is optional.  
-*The pie_dict parameter selects the colors for each pie slice.  
-*Scale_factor_size and scale_fractor_ratios modify the difference in size between each pie chart and pie slice.  
-*After calling zoom_to_area (which sets the limits of the main axis to the max and min of the passed in areas), call zoom_home to restore axis to original limits.  
-*Other arguments should be known to Matplotlib and Basemap users.  
-
-### Explanation:
-size_data is a feature which can scale each pie chart's overall diameter relative to other pie charts.  
-size_ratios scales the size of a slice (or the length of its radius) relative to other pie slices within the chart.  
+* The ChoroPie class inherits directly from Basemap.
+* Pie plotting is optional. If pies are plotted, both size_data and size_ratios are optional. Not all pies have to be plotted as well (if it gets too cluttered...though in that case you can call the zoom_to_area method).  
+* Choropleth plotting is optional.  
+* The pie_dict parameter selects the colors for each pie slice.  
 
 ### Results:
-<img src="https://user-images.githubusercontent.com/30331170/33050018-b200156e-ce30-11e7-9ffa-b58885df2062.png" width="75%"/>
+<img src="https://user-images.githubusercontent.com/30331170/33050018-b200156e-ce30-11e7-9ffa-b58885df2062.png" width="100%"/>
 
 By examining these results we can see that:
 1. California has had the most police killings.  
 2. California has not had the highest per capita rate of police killings, with states such as New Mexico edging out ahead.  
 3. In most states, the race with the most deaths were whites.  
 4. Despite that, in states such as Oklahoma and Missiori, more blacks were killed proportionally when adjusted for the population differences of each race.  
+
+# Explanation of Other features:
+<img src= "https://user-images.githubusercontent.com/30331170/33150972-f0d7bf66-cfa3-11e7-9337-29cca69af4a7.png" width="25%"/>
+size_data scales each pie chart's overall diameter relative to other pie charts.  
+<img src="https://user-images.githubusercontent.com/30331170/33150962-e629ca50-cfa3-11e7-97ed-6130e632bb6f.png" width="25%"/>
+size_ratios scales the size of a slice (or the length of its radius) relative to other pie slices within the chart.
+<img src=https://user-images.githubusercontent.com/30331170/33052934-2f5ad324-ce3f-11e7-8e0c-2fb3f459aa29.png width="50%"/>
+
+```
+df_state = df_primary[df_primary['state'] == 'New York']
+queery = df_state.set_index('county').loc[['Queens', 'Bronx', 'Brooklyn', 'Manhattan', 'Staten Island', 'Rockland', 'Westchester', 'Orange', 'Putnam']]['fips'].unique().astype(int)
+
+test.zoom_to_area([str(num) for num in queery]
+```  
+Pass a list of area_names to zoom_to_area to constrain the main axis to the difference between min and max coordinates of those areas. Thereafter, call zoom_home to reset axis limits.
