@@ -169,11 +169,18 @@ df_race['per_capita'] = df_race['count'] / df_race['pop']
 
 # df_state.drop('California', inplace=True)
 
+###
+shp_file = 'Data/cb_2016_us_state_500k/cb_2016_us_state_500k'
+
+shp_lst = cp.get_shp_attributes(shp_file)
+shp_key = cp.find_shp_key(df_state['counts'].index, shp_lst)
+###
+
 basemap = dict(
     basemap_kwargs=dict(llcrnrlon=-119, llcrnrlat=22, urcrnrlon=-64,
                         urcrnrlat=49, projection='lcc', lat_1=33, lat_2=45, lon_0=-95),
-    shp_file='Data/cb_2016_us_state_500k/cb_2016_us_state_500k',
-    shp_key='NAME',
+    shp_file=shp_file,
+    shp_key=shp_key,
     figsize=(22, 12),
 )
 
@@ -182,7 +189,7 @@ choro = dict(
     cmap='hot_r',
     color_data=df_state['counts'],
 )
-df_state['per_capita']
+
 pie = dict(
     size_data=df_state['per_capita'],
     size_ratios=df_race['per_capita'],

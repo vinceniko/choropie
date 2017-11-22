@@ -25,19 +25,21 @@ def get_shp_attributes(shp_file):
 
     return m.area_info
 
-def find_shp_key(index, shp_lst):
+
+def find_shp_key(area_index, shp_lst):
     """
     Iterate through shp file attributes to find the key which matches the input index which will be used in Choropie.
 
     Parameters:
-        index (list of strings): area_names as indices. same index to be passed into choropie parameters like size_data.
+        area_index (list of strings): area_names as indices. same index to be passed into choropie parameters like size_data.
         shp_lst (list of dicts): same object as returned by get_shp_attributes or Basemap."area"_info.
     """
-    for item in index:
+    for item in area_index:
         for dct in shp_lst:
             for key, val in dct.items():
                 if item == val:
                     return key
+
 
 def coords_in_area(locations, coords, shp_file, shp_key):
     """
@@ -240,7 +242,8 @@ class ChoroPie(Basemap):
         self.y_lims = self.ax.get_ylim()
 
         ###
-        self.annotations = {}  # dictionary which holds annotations created in set_pie_offset method
+        # dictionary which holds annotations created in set_pie_offset method
+        self.annotations = {}
 
     def choro_plot(self, num_colors, cmap, color_data, alpha=1):
         """
@@ -341,7 +344,7 @@ class ChoroPie(Basemap):
         else:
             cb.ax.set_xlabel(colorbar_title, **default)
 
-    def pie_plot(self, pie_data, pie_dict, size_data=1000, scale_factor_size=1, scale_factor_ratios=1/2, size_ratios=None):
+    def pie_plot(self, pie_data, pie_dict, size_data=1000, scale_factor_size=1, scale_factor_ratios=1 / 2, size_ratios=None):
         """
         Plots pies at centroids.
 
@@ -531,13 +534,15 @@ class ChoroPie(Basemap):
 
         if area_name in self.annotations:  # check to see if annotation is in dictionary container
             try:
-                self.annotations[area_name].remove()   # remove to prevent multiple arrows
+                # remove to prevent multiple arrows
+                self.annotations[area_name].remove()
             except Exception as e:
                 del(self.annotations['area_name'])
                 print('exception: ', e)
 
         default = dict(s='', xy=(new_origin[0], new_origin[1]),  xycoords='data',
-                         xytext=(old_origin[0], old_origin[1]), textcoords='data',
+                         xytext=(old_origin[0], old_origin[1]
+                                 ), textcoords='data',
                          color='black', ha='center', arrowprops=dict(arrowstyle="fancy", color='red'))
         default.update(annotate_kwargs)
         self.annotations.update({area_name: self.ax.annotate(**default)})

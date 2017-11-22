@@ -133,13 +133,19 @@ series_size = df_votes.loc[state, 'votes'].sum(axis=1)
 series_size.index = series_size.index.astype(int)
 series_size.index = series_size.index.astype(str)
 
+###
+shp_file = 'Shapefiles/cb_2016_us_county_500k'
+shp_lst = cp.get_shp_attributes(shp_file)
+
+key = cp.find_shp_key(df_main_state.index, shp_lst)
+###
 
 basemap = dict(
     basemap_kwargs=dict(llcrnrlon=-79.80,llcrnrlat=40.40,urcrnrlon=-71.81,urcrnrlat=45.1, lat_0=043.2994, lon_0=74.2179,
                  resolution='i', projection='tmerc', epsg=4269
     ),
-    shp_file='shapefiles/cb_2016_us_county_500k',
-    shp_key='GEOID',
+    shp_file=shp_file,
+    shp_key=key,
     figsize=(24,24),
     )
 
