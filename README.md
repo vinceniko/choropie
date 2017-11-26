@@ -18,7 +18,8 @@ Requires
 * matplotlib
 * basemap
 
-#### Features:
+Features:
+----------
   * Easy choropleth mapping.  
   * Easy colorbar insertion.  
   * Plot pie charts at each shp file polygon centroid.  
