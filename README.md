@@ -43,7 +43,7 @@ With size_data and size_ratios:
 Installation
 --------------------
 
-To install use pip (not yet):
+To install use pip:
 
     $ pip install choropie
 

@@ -15,6 +15,7 @@ eggs
 parts
 bin
 var
+*dist
 sdist
 develop-eggs
 .installed.cfg
@@ -23,18 +24,6 @@ lib64
 
 # Installer logs
 pip-log.txt
-
-# Unit test / coverage reports
-.coverage
-.tox
-nosetests.xml
-
-# Complexity
-output/*.html
-output/*/index.html
-
-# Sphinx
-docs/_build
 
 # Cookiecutter
 output/
