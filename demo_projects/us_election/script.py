@@ -1,6 +1,5 @@
 import numpy as np
 import pandas as pd
-import seaborn as sns
 from math import isnan
 import choropie.ChoroPie as cp
 from mpl_toolkits.basemap import Basemap
