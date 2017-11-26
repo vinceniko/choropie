@@ -20,7 +20,7 @@ dependency_links = [x.strip().replace('git+', '') for x in all_reqs if x.startsw
 setup(
     name='choropie',
     version=__version__,
-    description='A Basemap/Matplotlib implementation which allows the simplified creation of choropleth maps with colorbars using shapefiles, and the combined plotting of pie charts within the centroid coordinates of the shapefile\'s polygons.',
+    description='Create a choropleth map with pie charts in each polygon centroid.',
     long_description=long_description,
     url='https://github.com/vinceniko/choropie',
     download_url='https://github.com/vinceniko/choropie/tarball/' + __version__,
@@ -31,7 +31,7 @@ setup(
       'Programming Language :: Python :: 3',
     ],
     keywords='',
-    packages=find_packages(exclude=['docs', 'tests*', 'images']),
+    packages=find_packages(),
     include_package_data=True,
     author='Vincent Nikolayev',
     install_requires=install_requires,
