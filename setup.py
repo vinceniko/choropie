@@ -31,7 +31,7 @@ setup(
       'Programming Language :: Python :: 3',
     ],
     keywords='',
-    packages=find_packages(),
+    packages=find_packages(exclude=['demo_projects', 'basemap']),
     include_package_data=True,
     author='Vincent Nikolayev',
     install_requires=install_requires,
