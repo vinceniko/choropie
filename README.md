@@ -3,7 +3,7 @@
 ChoroPie
 ===============================
 
-version number: 0.0.1
+version number: 0.0.2
 author: Vincent Nikolayev
 
 Overview
