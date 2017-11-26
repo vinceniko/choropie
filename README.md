@@ -13,9 +13,10 @@ A Basemap/Matplotlib toolkit which allows the simplified creation of choropleth 
 
 Requires
 -------
-* Basemap
-* Matplotlib
-* Pandas
+* numpy
+* pandas
+* matplotlib
+* basemap
 
 #### Features:
   * Easy choropleth mapping.  
