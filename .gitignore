@@ -25,5 +25,5 @@ lib64
 # Installer logs
 pip-log.txt
 
-# Cookiecutter
-output/
+# pypi readme
+README.rst
