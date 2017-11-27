@@ -146,9 +146,9 @@ By examining these results we can see that:
 
 ```
 df_state = df_primary[df_primary['state'] == 'New York']
-queery = df_state.set_index('county').loc[['Queens', 'Bronx', 'Brooklyn', 'Manhattan', 'Staten Island', 'Rockland', 'Westchester', 'Orange', 'Putnam']]['fips'].unique().astype(int)
+query = df_state.set_index('county').loc[['Queens', 'Bronx', 'Brooklyn', 'Manhattan', 'Staten Island', 'Rockland', 'Westchester', 'Orange', 'Putnam']]['fips'].unique().astype(int)
 
-test.zoom_to_area([str(num) for num in queery])
+test.zoom_to_area([str(num) for num in query])
 ```  
 * Pass a list of area_names to zoom_to_area to constrain the main axis to the difference between min and max coordinates of those areas (in this case, this method allows us to uncluster the piecharts in the primary results image towards the top of the page). Thereafter, call zoom_home to reset axis limits.
 * There are various methods available for translating both polygons and pie charts easily and effectively. (Example. refer to how Hawaii and Alaska are plotted in an aformentioned image). 
