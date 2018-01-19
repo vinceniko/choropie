@@ -53,11 +53,11 @@ Or clone the repo:
 
     $ git clone https://github.com/vinceniko/choropie.git
     $ python setup.py install
-    
+
 Basic Usage
 ------------------
 This example uses data taken from <https://www.kaggle.com/the-guardian/the-counted> and US census data including: population per state, the populations of each race in each state.  
-*Disclaimer: The colors used to present the racially focused data is not reflective of any kind of idealogy. I realize that some may find the use of these colors to be offensive, but no offense was implied or intended. The chosen colors are merely used to better explain the concepts being introduced in the explanation below. 
+*Disclaimer: The colors used to present the racially focused data is not reflective of any kind of idealogy. I realize that some may find the use of these colors to be offensive, but no offense was implied or intended. The chosen colors are merely used to better explain the concepts being introduced in the explanation below.
 
 ### Code:
 ```
@@ -101,7 +101,7 @@ test.pie_plot(**pie)
 test.insert_colorbar(colorbar_title='Map: Count of Killings', colorbar_loc_kwargs=dict(location='right'))
 test.insert_pie_legend(legend_loc='lower right', pie_legend_kwargs=dict(title='Pies: Racial Breakdown'))
 ```
-### Arguments Explained:
+### Parameters Explained:
 Where color_data and size data are Pandas single-index series with the area_names used in the shp file as the index.  
 Ie.  
 
@@ -111,7 +111,7 @@ alabama | .000010
 alaska | .000020
 arizona | .000017
 
-Where pie_data and size_ratios are Pandas multi-index series with the area_names used in the shp file as the first index, and the pie chart slices (the ones passed into the pie_dict parameter), as the second index. 
+Where pie_data and size_ratios are Pandas multi-index series with the area_names used in the shp file as the first index, and the pie chart slices (the ones passed into the pie_dict parameter), as the second index.
 Ie.
 
 area_name | race | per-race rate
@@ -151,4 +151,4 @@ query = df_state.set_index('county').loc[['Queens', 'Bronx', 'Brooklyn', 'Manhat
 test.zoom_to_area([str(num) for num in query])
 ```  
 * Pass a list of area_names to zoom_to_area to constrain the main axis to the difference between min and max coordinates of those areas (in this case, this method allows us to uncluster the piecharts in the primary results image towards the top of the page). Thereafter, call zoom_home to reset axis limits.
-* There are various methods available for translating both polygons and pie charts easily and effectively. (Example. refer to how Hawaii and Alaska are plotted in an aformentioned image). 
+* There are various methods available for translating both polygons and pie charts easily and effectively. (Example. refer to how Hawaii and Alaska are plotted in an aformentioned image).
