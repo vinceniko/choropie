@@ -4,7 +4,7 @@ import os
 import datetime as dt
 from choropie import ChoroPie as cp
 
-# state names and abbreviations
+#%% state names and abbreviations
 dict_states = {
     'AK': 'Alaska',
     'AL': 'Alabama',
@@ -65,10 +65,10 @@ dict_states = {
     'WY': 'Wyoming'
 }
 
-# import general state population dataset and remove first three rows
+#%% import general state population dataset and remove first three rows
 df_pop = pd.read_excel('Data/state_population_estimates.xlsx', skiprows=3)
 
-# to remove '.' in front of state in df_pop
+#%% to remove '.' in front of state in df_pop
 
 
 def remove_period(x):
@@ -80,18 +80,15 @@ def remove_period(x):
 df_pop.iloc[:, 0] = df_pop.iloc[:, 0].apply(
     remove_period)  # perform remove_period
 
-# select necessary state rows and correct year
+#%% select necessary state rows and correct year
 series_pop = df_pop.set_index(df_pop.columns[0]).loc['Alabama':'Wyoming', 2016]
 series_pop.name = 'population'
 
-# import police killings dataset
-# set proper encoding or get error.
-df_killings = pd.read_csv('Data/PoliceKillingsUS.csv', encoding="latin1")
+#%% import police killings dataset
+df_killings = pd.read_csv('Data/PoliceKillingsUS.csv', encoding="latin1") # set proper encoding or get error.
 
-# replace race abbreviations
-
-
-def spam(x):
+#%% replace race abbreviations
+def abr(x):
     try:
         if x[0] == 'A':
             return "Asian"
@@ -109,9 +106,9 @@ def spam(x):
         return None
 
 
-df_killings['race'] = df_killings['race'].apply(spam)
+df_killings['race'] = df_killings['race'].apply(abr)
 
-# use datetime module to extract min and max dates of dataset
+#%% use datetime module to extract min and max dates of dataset
 # format dates to Jan. 01, 06 format
 # used for title of plot
 max_date = df_killings['date'].apply(
@@ -119,17 +116,18 @@ max_date = df_killings['date'].apply(
 min_date = df_killings['date'].apply(
     lambda x: dt.datetime.strptime(x, '%d/%m/%y')).min().strftime('%b. %d, %y')
 
-# series breaking down count of killings by state
+#%% series breaking down count of killings by state
 series_state = df_killings.groupby('state').count()['id']
 series_state.rename('counts', inplace=True)
-# series breaking down count of killings by state and race (MultiIndex)
+
+#%% series breaking down count of killings by state and race (MultiIndex)
 series_race = df_killings.groupby(['state', 'race']).count()['id']
 
-# percentage of each race killed by state
+#%% percentage of each race killed by state
 series_state_crime_race_percs = series_race / \
     series_race.groupby('state').sum() * 100
 
-
+#%%
 def set_index_states(df):
     if isinstance(df.index, pd.MultiIndex):
         list_abb = [dict_states[abb] for abb in df.index.levels[0]]
@@ -144,36 +142,37 @@ def set_index_states(df):
 set_index_states(series_race)
 set_index_states(series_state)
 
+#%% df_state is the first df we will use for plotting
 df_state = pd.concat([series_state, series_pop], axis=1)
-
 # per capita percentage
 df_state['per_capita'] = df_state['counts'] / df_state['population']
 
+#%% intermediary step
 # population by race for each state
 df_state_race = pd.read_excel('Data/state_race.xlsx', index_col=0)
 
 df_state_race = df_state_race.iloc[1:, :]
 df_state_race.columns.name = 'race'
 
+# transform columns into multiindex
 df_massaged = pd.melt(df_state_race.reset_index(),
                       id_vars='Geography', value_vars=df_state_race.columns)
 df_massaged = df_massaged.groupby(
     ['Geography', 'race']).agg(lambda x: x.iloc[0])
 
+#%% df_race is the second df we will use for plotting
 df_race = pd.concat([series_race, series_state_crime_race_percs,
                      df_massaged], axis=1).dropna()
-df_race.columns = ['count', 'percs', 'pop']
+df_race.columns = ['count', 'percs', 'pop']  # count, percent, population
 df_race['per_capita'] = df_race['count'] / df_race['pop']
 
 ###################
 
-# df_state.drop('California', inplace=True)
-
-###
+#%% shp file processing
 shp_file = 'Data/cb_2016_us_state_500k/cb_2016_us_state_500k'
 
 shp_lst = cp.get_shp_attributes(shp_file)
-shp_key = cp.find_shp_key(df_state['counts'].index, shp_lst)
+shp_key = cp.find_shp_key(df_state.index, shp_lst)  # which shp attribute holds our index values
 ###
 
 basemap = dict(
@@ -199,30 +198,37 @@ pie = dict(
     scale_factor_size=1,
     scale_factor_ratios=1 / 2
 )
+#%% create ChoroPie object
+m = cp.ChoroPie(**basemap)
 
-test = cp.ChoroPie(**basemap)
+#%% plot choropleths
+m.choro_plot(**choro)
 
-test.clear_elements()
+#%% plot pies
+m.pie_plot(**pie)
 
-test.choro_plot(**choro)
-test.pie_plot(**pie)
-
-test.insert_colorbar(colorbar_title='Map: Count of Killings',
+#%% insert colorbar
+m.insert_colorbar(colorbar_title='Map: Count of Killings',
                      colorbar_loc_kwargs=dict(location='right'))
-test.insert_pie_legend(legend_loc='lower right',
+
+#%% insert legend for pie charts
+m.insert_pie_legend(legend_loc='lower right',
                        pie_legend_kwargs=dict(title='Pies: Racial Breakdown'))
 
-test.ax.set_title('Police Killings: Jan. 02, 15 - Jul. 31, 17\nTotal: {:,d}'.format(
+#%% set title
+m.ax.set_title('Police Killings: Jan. 02, 15 - Jul. 31, 17\nTotal: {:,d}'.format(
     df_killings.iloc[:, 0].count()), fontsize=35, fontweight='bold', x=0.61, y=0.90)
 
-test.fig.savefig('Outputs/qwerty.png', bbox_inches='tight')
+#%% change ticks of the colorbar
+m.ax_colorbar.set_yticklabels(['{:.0f}'.format(
+    float(i.get_text())) for i in m.ax_colorbar.get_ymajorticklabels()])
 
-test.ax_colorbar.set_yticklabels(['{:.0f}'.format(
-    float(i.get_text())) for i in test.ax_colorbar.get_ymajorticklabels()])
+m.fig
 
-# for i, j in test.corr_centroids.items():
-#     if i in series_state:
-#         test.ax.text(*j, i, fontsize=15, color='red')
+#%%
+m.zoom_to_area('New York')
 
-# test.zoom_to_area('New York')
-test.fig
+#%% reset zoom level
+m.zoom_home()
+
+m.fig

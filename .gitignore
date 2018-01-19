@@ -27,3 +27,9 @@ pip-log.txt
 
 # pypi readme
 README.rst
+
+# macos
+.DS_store
+
+# test
+test.py
