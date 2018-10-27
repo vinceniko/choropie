@@ -137,9 +137,7 @@ By examining these results we can see that:
 4. Despite that, in states such as Oklahoma and Missiori, more blacks were killed proportionally when adjusted for the population differences of each race.  
 
 # Explanation of Other features:
-<img src= "https://user-images.githubusercontent.com/30331170/33150972-f0d7bf66-cfa3-11e7-9337-29cca69af4a7.png" width="25%"/>
 * size_data scales each pie chart's overall diameter relative to other pie charts.  
-<img src="https://user-images.githubusercontent.com/30331170/33150962-e629ca50-cfa3-11e7-97ed-6130e632bb6f.png" width="25%"/>
 * size_ratios scales the size of a slice (or the length of its radius) relative to other pie slices within the chart.
 <img src=https://user-images.githubusercontent.com/30331170/47597970-2c1eb600-d963-11e8-90d7-e86d998394fa.png width="50%"/>
 
