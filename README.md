@@ -36,10 +36,10 @@ Without size_data:
 <img src="https://user-images.githubusercontent.com/30331170/33050049-ebfc0cd2-ce30-11e7-92df-84269f423ea8.png" width="60%" />
 
 With size_data:  
-<img src="https://user-images.githubusercontent.com/30331170/33052907-04c44316-ce3f-11e7-9bb0-d3c426502de4.png" width="60%" />
+<img src="https://user-images.githubusercontent.com/30331170/47597971-2c1eb600-d963-11e8-9a86-29141602d50c.png" width="60%" />
 
 With size_data and size_ratios:  
-<img src="https://user-images.githubusercontent.com/30331170/33050018-b200156e-ce30-11e7-9ffa-b58885df2062.png" width="60%"/>
+<img src="https://user-images.githubusercontent.com/30331170/47597996-a6e7d100-d963-11e8-839e-6433437ff590.png" width="60%"/>
 
 Installation
 --------------------
@@ -142,7 +142,7 @@ By examining these results we can see that:
 * size_data scales each pie chart's overall diameter relative to other pie charts.  
 <img src="https://user-images.githubusercontent.com/30331170/33150962-e629ca50-cfa3-11e7-97ed-6130e632bb6f.png" width="25%"/>
 * size_ratios scales the size of a slice (or the length of its radius) relative to other pie slices within the chart.
-<img src=https://user-images.githubusercontent.com/30331170/33052934-2f5ad324-ce3f-11e7-8e0c-2fb3f459aa29.png width="50%"/>
+<img src=https://user-images.githubusercontent.com/30331170/47597970-2c1eb600-d963-11e8-90d7-e86d998394fa.png width="50%"/>
 
 ```
 df_state = df_primary[df_primary['state'] == 'New York']
