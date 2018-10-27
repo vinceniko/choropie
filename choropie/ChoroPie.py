@@ -58,8 +58,7 @@ def coords_in_area(locations, coords, shp_file, shp_key):
 
     m.readshapefile(shp_file, name='area')
 
-    area_names = [area[shp_key]
-                  for area in m.area_info]  # congregate names into list
+    area_names = [area[shp_key] for area in m.area_info]  # congregate names into list
 
     # define default name, shape coordinates tuple
     area_shapes = list(zip(area_names, m.area))
@@ -109,8 +108,7 @@ class ChoroPie(Basemap):
         Used in loops when translating and scaling an area. Accepts individual shapes as arguments.
         Do not use! Use translate_shapes method instead.
         """
-        distances = np.array(
-            [(np.array(coord) - np.array(origin)) * np.float(scale) for coord in shape])
+        distances = np.array([(np.array(coord) - np.array(origin)) * np.float(scale) for coord in shape])
         new_origin = np.array(self(lon, lat))
         shape = new_origin + distances
 
@@ -121,14 +119,12 @@ class ChoroPie(Basemap):
         Used in loops for determining centroids. Accepts individual shapes as arguments.
         """
         # find areas for isolated shapes
-        poly_areas = [(poly, sc.area_for_polygon(poly))
-                      for poly in shape]
+        poly_areas = [(poly, sc.area_for_polygon(poly)) for poly in shape]
 
         # find shapes with max area
         max_area = max([area for poly, area in poly_areas])
         # determine which shape has max area
-        max_poly = [poly for poly,
-                    area in poly_areas if area == max_area][0]
+        max_poly = [poly for poly, area in poly_areas if area == max_area][0]
         # find centroid of that shape
         poly_centroid = sc.centroid_for_polygon(max_poly)
 
@@ -141,8 +137,11 @@ class ChoroPie(Basemap):
         mpl_paths_sin = []
 
         if len(pie_data) == 1:  # draw solid colored pie when only one variable is present (to avoid a radial line)
-            path = self.ax.scatter(
-                X, Y, s=size, facecolor=self.pie_dict[colors[0]], edgecolor='black', zorder=3)
+            path = self.ax.scatter(X, Y,
+                                   s=size,
+                                   facecolor=self.pie_dict[colors[0]],
+                                   edgecolor='black',
+                                   zorder=3)
 
             mpl_paths_sin.append(path)
 
@@ -152,28 +151,33 @@ class ChoroPie(Basemap):
             # determine arches
             start = 0.
             for ratio in pie_data:
-                x = [0] + np.cos(np.linspace(2 * np.pi * start, 2 *
-                                             np.pi * (start + ratio), 30)).tolist()
-                y = [0] + np.sin(np.linspace(2 * np.pi * start, 2 *
-                                             np.pi * (start + ratio), 30)).tolist()
+                x = [0] + np.cos(np.linspace(2 * np.pi * start, 2 * np.pi * (start + ratio), 30)).tolist()
+                y = [0] + np.sin(np.linspace(2 * np.pi * start, 2 * np.pi * (start + ratio), 30)).tolist()
                 xy.append(list(zip(x, y)))
                 start += ratio
 
             # iterate through slices and draw one by one
             for colors, xyi in zip(colors, xy):
                 if size_ratios is not None:
-                    path = self.ax.scatter(X, Y, marker=(xyi, 0),
+                    path = self.ax.scatter(X, Y,
+                                           marker=(xyi, 0),
                                            # size is the constant, size_ratios is the weight
                                            # of each slice, normalized
-                                           s=np.array(
-                        size) * (np.array(size_ratios.loc[colors] / size_ratios.sum()) * 2 + 0.5),  # normalize size ratios
-                        alpha=1, facecolor=self.pie_dict[colors], edgecolor='black', zorder=3)
+                                           s=np.array(size) * (np.array(size_ratios.loc[colors] / size_ratios.sum()) * 2 + 0.5),  # normalize size ratios
+                                           alpha=1,
+                                           facecolor=self.pie_dict[colors],
+                                           edgecolor='black',
+                                           zorder=3)
 
                     mpl_paths_sin.append(path)
 
                 else:
-                    path = self.ax.scatter(X, Y, marker=(
-                        xyi, 0), s=size, facecolor=self.pie_dict[colors], edgecolor='black', zorder=3)
+                    path = self.ax.scatter(X, Y,
+                                           marker=(xyi, 0),
+                                           s=size,
+                                           facecolor=self.pie_dict[colors],
+                                           edgecolor='black',
+                                           zorder=3)
 
                     mpl_paths_sin.append(path)
 
@@ -199,11 +203,9 @@ class ChoroPie(Basemap):
         self.ax = self.fig.add_axes([0.1, 0.1, .95, 0.95], frame_on=False)
 
         # shp file
-        self.readshapefile(
-            shp_file, 'area', drawbounds=True, zorder=1)  # read shapefile
+        self.readshapefile(shp_file, 'area', drawbounds=True, zorder=1)  # read shapefile
 
-        self.area_names = [areas[shp_key]
-                           for areas in self.area_info]  # congregate names into list
+        self.area_names = [areas[shp_key] for areas in self.area_info]  # congregate names into list
 
         # define default name, shape coordinates tuple
         self.indexer = {}  # holds index value for first name of each area in self.shapes
@@ -226,8 +228,7 @@ class ChoroPie(Basemap):
                 if (self.area_names[i] != self.area_names[i + 1]):
                     end = i + 1  # end index
 
-                    shapes = [shapes for name,
-                              shapes in self.corr_shapes[start:end]]
+                    shapes = [shapes for name, shapes in self.corr_shapes[start:end]]
 
                     poly_centroid = self.__set_centroids(shapes)
 
@@ -264,8 +265,7 @@ class ChoroPie(Basemap):
         self.__scheme = [cm(i / num_colors) for i in range(1, num_colors + 1)]
 
         # define bin ranges
-        self.__bins = np.linspace(
-            color_data.min(), color_data.max(), num_colors + 1)
+        self.__bins = np.linspace(color_data.min(), color_data.max(), num_colors + 1)
 
         # create series with bins corresponding to data values
         series_bins = pd.Series(index=color_data.index,
@@ -276,8 +276,11 @@ class ChoroPie(Basemap):
         for name_glob, shape in self.corr_shapes:
             if name_glob in series_bins:
                 color = self.__scheme[series_bins.loc[name_glob]]
-                poly = Polygon(shape, facecolor=color,
-                               edgecolor='black', zorder=2, alpha=alpha)
+                poly = Polygon(shape,
+                               facecolor=color,
+                               edgecolor='black',
+                               zorder=2,
+                               alpha=alpha)
                 self.ax.add_patch(poly)
 
                 if name_glob not in self.mpl_polygons:
@@ -309,34 +312,43 @@ class ChoroPie(Basemap):
         except Exception:
             pass
 
-        default = dict(
-            fraction=0.05, location='right', aspect=40, shrink=.75, pad=0.01)
+        default = dict(fraction=0.05,
+                       location='right',
+                       aspect=40,
+                       shrink=.75,
+                       pad=0.01)
         default.update(colorbar_loc_kwargs)
 
-        self.ax_colorbar, kw = mpl.colorbar.make_axes(
-            self.ax, **default)
+        self.ax_colorbar, kw = mpl.colorbar.make_axes(self.ax, **default)
 
         cmap = mpl.colors.ListedColormap(self.__scheme)
 
         orientation = 'vertical'
         if (default['location'] == 'right') or (default['location'] == 'left'):
             orientation = 'vertical'
-            default = dict(ax=self.ax_colorbar, cmap=cmap, ticks=self.__bins,
-                           boundaries=self.__bins, orientation='vertical')
+            default = dict(ax=self.ax_colorbar,
+                           cmap=cmap,
+                           ticks=self.__bins,
+                           boundaries=self.__bins,
+                           orientation='vertical')
         else:
             orientation = 'horizontal'
-            default = dict(ax=self.ax_colorbar, cmap=cmap, ticks=self.__bins,
-                           boundaries=self.__bins, orientation='horizontal')
+            default = dict(ax=self.ax_colorbar,
+                           cmap=cmap,
+                           ticks=self.__bins,
+                           boundaries=self.__bins,
+                           orientation='horizontal')
 
         default.update(colorbarbase_kwargs)
 
         cb = mpl.colorbar.ColorbarBase(**default)
         cb.ax.set_xticklabels(self.__bins)
 
-        default = dict(labelpad=15, fontdict=dict(fontsize=14,
-                                                  fontweight='bold',
-                                                  verticalalignment='center',
-                                                  horizontalalignment='center'))
+        default = dict(labelpad=15,
+                       fontdict=dict(fontsize=14,
+                                     fontweight='bold',
+                                     verticalalignment='center',
+                                     horizontalalignment='center'))
         default.update(colorbar_title_kwargs)
 
         if orientation == 'vertical':
@@ -368,10 +380,10 @@ class ChoroPie(Basemap):
         pie_data.index.rename(['key1', 'key2'], inplace=True)
         df_sums = pie_data.groupby(level=0).sum()
         df_sums.rename('sums', inplace=True)
-        pie_data = pd.merge(pie_data.reset_index(), df_sums.reset_index(), on=[
-                            'key1'], how='inner').set_index(['key1', 'key2'])
-        pie_data = pie_data[[
-            column for column in pie_data.columns if 'sums' not in str(column)][0]] / pie_data['sums']
+        pie_data = pd.merge(pie_data.reset_index(), df_sums.reset_index(),
+                            on=['key1'], how='inner').set_index(['key1',
+                                                                 'key2'])
+        pie_data = pie_data[[column for column in pie_data.columns if 'sums' not in str(column)][0]] / pie_data['sums']
 
         # normalize size ratios
         if isinstance(size_ratios, pd.Series):
@@ -391,9 +403,15 @@ class ChoroPie(Basemap):
 
             if name_glob == 'District of Columbia':
                 x *= 1.105  # translate right
-                self.ax.annotate(name_glob, xy=(x, y),  xycoords='data',
-                                 xytext=(x, y * 0.85), textcoords='data',
-                                 color='black', ha='center', arrowprops=dict(arrowstyle="fancy", color='red'))
+                self.ax.annotate(name_glob,
+                                 xy=(x, y),
+                                 xycoords='data',
+                                 xytext=(x, y * 0.85),
+                                 textcoords='data',
+                                 color='black',
+                                 ha='center',
+                                 arrowprops=dict(arrowstyle="fancy",
+                                                 color='red'))
 
             path = self.__draw_pie(X=x, Y=y,
                                    colors=series_sorted.index,
@@ -444,8 +462,9 @@ class ChoroPie(Basemap):
             print('call method "pie_plot" first')
 
         for label, color in self.pie_dict.items():
-            patches.append(Patch(
-                label=label, facecolor=color, edgecolor='black'))
+            patches.append(Patch(label=label,
+                                 facecolor=color,
+                                 edgecolor='black'))
 
         # default: upper left
         bbox_anchor = (0.03, 0.97)
@@ -458,8 +477,11 @@ class ChoroPie(Basemap):
         elif legend_loc == 'lower left':
             bbox_anchor = (bbox_anchor[0], bbox_anchor[0])
 
-        legend_default = dict(
-            handles=patches, title=None, loc=legend_loc, bbox_to_anchor=bbox_anchor,  edgecolor='black')
+        legend_default = dict(handles=patches,
+                              title=None,
+                              loc=legend_loc,
+                              bbox_to_anchor=bbox_anchor,
+                              edgecolor='black')
         legend_default.update(pie_legend_kwargs)
 
         self.ax.legend(**legend_default)
@@ -540,10 +562,15 @@ class ChoroPie(Basemap):
                 del(self.annotations['area_name'])
                 print('exception: ', e)
 
-        default = dict(s='', xy=(new_origin[0], new_origin[1]),  xycoords='data',
-                         xytext=(old_origin[0], old_origin[1]
-                                 ), textcoords='data',
-                         color='black', ha='center', arrowprops=dict(arrowstyle="fancy", color='red'))
+        default = dict(s='',
+                       xy=(new_origin[0], new_origin[1]),
+                       xycoords='data',
+                       xytext=(old_origin[0], old_origin[1]),
+                       textcoords='data',
+                       color='black',
+                       ha='center',
+                       arrowprops=dict(arrowstyle="fancy",
+                                       color='red'))
         default.update(annotate_kwargs)
         self.annotations.update({area_name: self.ax.annotate(**default)})
 

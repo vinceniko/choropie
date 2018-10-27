@@ -159,8 +159,8 @@ pie= dict(
     pie_data=series_percs,
     size_data=series_size,
     scale_factor_size = 1/2,
-    pie_dict={'Asian': 'yellow', 'Black': 'black', 'Hispanic': 'brown',
-              'Native American': 'red', 'Ocean Pacific': 'purple', 'White': 'white'},
+    pie_dict={'Asian': 'cyan', 'Black': 'blue', 'Hispanic': 'green',
+              'Native American': 'purple', 'Ocean Pacific': 'red', 'White': '0.75'},
     )
 
 test = cp.ChoroPie(**basemap)
@@ -180,14 +180,15 @@ test.ax_colorbar.set_xticklabels([str('{:.0f}'.format(float(i.get_text()) * 100)
 ###
 df_state = df_primary[df_primary['state'] == 'New York']
 queery = df_state.set_index('county').loc[['Queens', 'Bronx', 'Brooklyn', 'Manhattan', 'Staten Island', 'Rockland', 'Westchester', 'Orange', 'Putnam']]['fips'].unique().astype(int)
-
-test.zoom_to_area([str(num) for num in queery])
 # #
-test.zoom_home()
 
 test.fig
 ####
 
-# test.fig.savefig('Outputs/Pie_Plots/NYS.png', bbox_inches='tight')
+test.fig.savefig('Outputs/Pie_Plots/NYS.png', bbox_inches='tight')
 
-# test.fig.savefig('Outputs/Pie_Plots/NYC_and_North_{}.png'.format(candidate.split()[-1]), bbox_inches='tight')
+test.zoom_to_area([str(num) for num in queery])
+
+test.fig.savefig('Outputs/Pie_Plots/NYC_and_North_{}.png'.format(candidate.split()[-1]), bbox_inches='tight')
+
+test.zoom_home()
