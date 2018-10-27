@@ -57,8 +57,7 @@ Or clone the repo:
 Basic Usage
 ------------------
 This example uses data taken from <https://www.kaggle.com/the-guardian/the-counted> and US census data including: population per state, the populations of each race in each state.  
-*Disclaimer: The colors used to present the racially focused data is not reflective of any kind of idealogy. I realize that some may find the use of these colors to be offensive, but no offense was implied or intended. The chosen colors are merely used to better explain the concepts being introduced in the explanation below.
-
+*Disclaimer: The colors used to present the racially focused data are not reflective of any kind of opinions and are not meant to be offensive in any way. 
 ### Code:
 ```
 from choropie import ChoroPie as cp
