@@ -129,7 +129,7 @@ alaska | white | 0.000105
 * The pie_dict parameter selects the colors for each pie slice.  
 
 ### Results:
-<img src="https://user-images.githubusercontent.com/30331170/33050018-b200156e-ce30-11e7-9ffa-b58885df2062.png" width="100%"/>
+<img src="https://user-images.githubusercontent.com/30331170/47597996-a6e7d100-d963-11e8-839e-6433437ff590.png" width="100%"/>
 
 By examining these results we can see that:
 1. California has had the most police killings.  
