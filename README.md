@@ -86,8 +86,8 @@ pie = dict(
     size_data=df_state['per_capita'],
     size_ratios=df_race['per capita'],
     pie_data=df_race['percs'],
-    pie_dict={'Asian': 'yellow', 'Black': 'black', 'Hispanic': 'brown',
-              'Native American': 'red', 'Ocean Pacific': 'purple', 'White': 'white'},
+    pie_dict={'Asian': 'cyan', 'Black': 'blue', 'Hispanic': 'green',
+    "              'Native American': 'purple', 'Ocean Pacific': 'red', 'White': '0.75'},
     scale_factor_size=1,
     scale_factor_ratios=1/2
     )
